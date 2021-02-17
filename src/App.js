@@ -6,6 +6,7 @@ import Chat from './components/Chat';
 import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import PropTypes from 'prop-types';
+import { GitHub } from '@material-ui/icons';
 
 function App(props) {
 
@@ -29,7 +30,11 @@ function App(props) {
               </Switch>
             </Router>
           </div>
-          <p>Developed with 💜 by Priyanshu Srivastava.</p>
+          <p>Developed with 💜 by Priyanshu Srivastava. <a href="https://github.com/priyanshu4705" target="_blank" rel="noreferrer">
+            <GitHub />
+              github
+            </a>
+          </p>
         </div>}
     </div>
   );
