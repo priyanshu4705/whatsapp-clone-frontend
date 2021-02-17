@@ -1,0 +1,74 @@
+.sidebar {
+  display: flex;
+  flex: 0.3;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.sidebar_header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-right: 1px solid lightgrey;
+}
+
+.sidebar_headerRight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 10vw;
+}
+
+.sidebar_headerRight > .MuiSvgIcon-root {
+  margin-right: 2vw;
+  font-size: 24px !important;
+}
+
+.sidebar_search {
+  display: flex;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 60px;
+  padding: 10px;
+}
+
+.sidebar_searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.sidebar_searchContainer > .MuiSvgIcon-root {
+  color: grey;
+  margin-left: 10px;
+}
+
+.sidebar_searchContainer > input {
+  margin-left: 20px;
+  /* hides the outline */
+  outline: none; 
+  border: none;
+}
+
+.sidebar_searchContainer > input:focus::placeholder {
+  color: transparent;
+}
+
+.sidebar_chats{
+  overflow-y: scroll;
+}
+
+.sidebar_chats::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar_chats::-webkit-scrollbar-track {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar_chats::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
