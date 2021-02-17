@@ -1,4 +1,4 @@
-import { Avatar, IconButton } from '@material-ui/core'
+import { Avatar, IconButton, Tooltip } from '@material-ui/core'
 import { AttachFile, InsertEmoticonOutlined, Mic, MoreVert, SearchOutlined, Send } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
@@ -88,9 +88,11 @@ function Chat(props) {
                         onChange={(e) => setInput(e.target.value)}
                         type="text"
                         placeholder="Type a message" />
+                    <Tooltip title="Send Message">
                     <IconButton type="submit" onClick={sendMessage}>
                         <Send />
-                    </IconButton>
+                        </IconButton>
+                    </Tooltip>
                 </form>
                 <IconButton>
                     <Mic />
