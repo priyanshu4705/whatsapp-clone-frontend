@@ -36,10 +36,9 @@
 }
 
 .chat_message {
-  position: relative;
   width: fit-content;
   font-size: 16px;
-  padding: 18px 10px 10px 10px;
+  padding: 10px;
   border-radius: 10px;
   margin-bottom: 30px;
   background-color: white;
@@ -63,14 +62,12 @@
 }
 
 .chat_name {
-  position: absolute;
-  margin-top: 3.5px;
-  top: 1px;
   font-size: 12px;
   font-weight: 700;
 }
 
 .chat_time {
+  margin-right: auto;
   margin-left: 10px;
   font-size: x-small;
 }

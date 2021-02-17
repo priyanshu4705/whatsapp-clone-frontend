@@ -3,33 +3,50 @@ import { AttachFile, InsertEmoticonOutlined, Mic, MoreVert, SearchOutlined, Send
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import db from '../firebase'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import firebase from 'firebase'
 import '../assets/chat.css'
 
-function Chat() {
+function Chat(props) {
 
     const [input, setInput] = useState('');
     const [roomName, setRoomName] = useState('');
+    const [messages, setMessages] = useState([]);
     const [seed, setSeed] = useState('');
     const { roomId } = useParams();
+    const { user } = props.user;
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000));
-        if (roomId)
+        if (roomId) {
             db.collection('rooms').doc(roomId)
                 .onSnapshot((snap) => setRoomName(snap.data().name));
-    },[roomId]);
 
-    const sendMessage = async (e) => {
+            db.collection('rooms').doc(roomId)
+                .collection('messages').orderBy('timestamp', 'asc')
+                .onSnapshot((snap) => (setMessages(snap.docs.map(doc => doc.data()))));
+        }
+    }, [roomId]);
+
+    const sendMessage = (e) => {
         e.preventDefault();
+        db.collection('rooms').doc(roomId)
+            .collection('messages').add({
+                message: input,
+                recieved: false,
+                name: user.displayName,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
         setInput('');
     }
 
     return (
         <div className="chat">
             <div className="chat_header">
-                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
+                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
                 <div className="chat_headerInfo">
-                    <h3>{ roomName }</h3>
+                    <h3>{roomName}</h3>
                     <p>last seen at ...</p>
                 </div>
                 <div className="chat_headerRight">
@@ -42,25 +59,15 @@ function Chat() {
                 </div>
             </div>
             <div className="chat_body">
-                {/* {messages.map(message => (
-                    <p key={message.timestamp} className={`chat_message ${!message.recieved && "chat_reciever"}`}>
-                        <span className="chat_name">{message.name}</span>
+                {messages.map(message => (
+                    <p key={message.id} className={`chat_message ${!message.recieved && "chat_reciever"}`}>
+                        <p className="chat_name">{message.name}</p>
                         {message.message}
-                        <span className="chat_time">{message.timestamp}</span>
+                        <span className="chat_time">
+                            {new Date(message.timestamp?.toDate()).toString().substring(16,24)}
+                        </span>
                     </p>
-                ))} */}
-
-                <p key={1} className={`chat_message`}>
-                    <span className="chat_name">Priyanshu</span>
-                    Hello this is hard coded
-                    <span className="chat_time">{new Date().toString().substring(16,24)}</span>
-                </p>
-
-                <p key={1} className={`chat_message chat_reciever`}>
-                    <span className="chat_name">Priyanshu</span>
-                    Hello this is hard coded
-                    <span className="chat_time">{new Date().toString().substring(16, 24)}</span>
-                </p>
+                ))}
             </div>
             <div className="chat_footer">
                 <IconButton>
@@ -86,4 +93,13 @@ function Chat() {
     )
 }
 
-export default Chat
+Chat.propTypes = {
+    user: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+
+export default connect(mapStateToProps, null)(Chat);

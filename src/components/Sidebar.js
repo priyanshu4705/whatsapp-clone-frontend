@@ -3,15 +3,18 @@ import '../assets/sidebar.css';
 import ChatIcon from '@material-ui/icons/Chat';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, IconButton, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { SearchOutlined } from '@material-ui/icons';
 import SidebarChat from './SidebarChat';
 import db from '../firebase'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
-function Sidebar() {
+function Sidebar(props) {
 
     const [rooms, setRooms] = useState([]);
+    const { user } = props.user;
 
     useEffect(() => {
 
@@ -37,11 +40,13 @@ function Sidebar() {
     return (
         <div className="sidebar">
             <div className="sidebar_header">
-                <Avatar src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png" />
+                <Avatar src={user?.photoURL} />
                 <div className="sidebar_headerRight">
-                    <IconButton onClick={addNewRoom}>
+                    <Tooltip title="Add a new Room to Chat">
+                        <IconButton onClick={addNewRoom}>
                         <AddIcon />
-                    </IconButton>
+                        </IconButton>
+                    </Tooltip>
                     <IconButton>
                         <DonutLargeIcon />
                     </IconButton>
@@ -68,4 +73,13 @@ function Sidebar() {
     )
 }
 
-export default Sidebar
+Sidebar.propTypes = {
+    user: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+
+export default connect(mapStateToProps, null)(Sidebar)

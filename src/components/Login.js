@@ -1,15 +1,11 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
-import {auth, provider} from '../firebase'
 import '../assets/login.css';
+import { connect } from 'react-redux';
+import { signIn } from '../actions/userActions';
+import PropTypes from 'prop-types';
 
-function Login() {
-
-    const SignIn = () => {
-        auth.signInWithPopup(provider)
-            .then((result) => { console.log(result.user)})
-            .catch((error) => alert(error.message));
-    }
+function Login(props) {
 
     return (
         <div className="login">
@@ -18,10 +14,14 @@ function Login() {
                 <div className="login_text">
                     <h1>Sign In to WhatsApp</h1>
                 </div>
-                <Button onClick={SignIn}>Sign In with google</Button>
+                <Button onClick={props.signIn}>Sign In with google</Button>
             </div>
         </div>
     )
 }
 
-export default Login
+Login.propTypes = {
+    signIn: PropTypes.func.isRequired
+}
+
+export default connect(null, { signIn })(Login);
