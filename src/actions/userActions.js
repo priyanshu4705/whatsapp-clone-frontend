@@ -1,4 +1,4 @@
-import { SET_USER } from './types';
+import { SET_USER, REMOVE_USER } from './types';
 import { auth, provider } from '../firebase'
 
 export const signIn = () => (dispatch) => {
@@ -8,4 +8,12 @@ export const signIn = () => (dispatch) => {
             user: result.user
         }))
         .catch((error) => alert(error.message));
+}
+
+export const logOut = () => (dispatch) => {
+    auth.signOut()
+        .then(result => dispatch({
+            type: REMOVE_USER,
+            user: null
+        })).catch((error) => alert(error.message));
 }

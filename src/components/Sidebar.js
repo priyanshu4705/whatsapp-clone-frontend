@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import '../assets/sidebar.css';
 import ChatIcon from '@material-ui/icons/Chat';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MeetingRoomRoundedIcon from '@material-ui/icons/MeetingRoomRounded';
 import { Avatar, IconButton, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { SearchOutlined } from '@material-ui/icons';
 import SidebarChat from './SidebarChat';
 import db from '../firebase'
 import { connect } from 'react-redux';
+import { logOut } from '../actions/userActions'
 import PropTypes from 'prop-types'
 
 function Sidebar(props) {
@@ -44,7 +45,7 @@ function Sidebar(props) {
                 <div className="sidebar_headerRight">
                     <Tooltip title="Add a new Room to Chat">
                         <IconButton onClick={addNewRoom}>
-                        <AddIcon />
+                            <AddIcon />
                         </IconButton>
                     </Tooltip>
                     <IconButton>
@@ -53,9 +54,11 @@ function Sidebar(props) {
                     <IconButton>
                         <ChatIcon />
                     </IconButton>
-                    <IconButton>
-                        <MoreVertIcon />
-                    </IconButton>
+                    <Tooltip title="Logout">
+                        <IconButton onClick={props.logOut}>
+                            <   MeetingRoomRoundedIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </div>
             <div className="sidebar_search">
@@ -74,7 +77,8 @@ function Sidebar(props) {
 }
 
 Sidebar.propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    logOut: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -82,4 +86,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, null)(Sidebar)
+export default connect(mapStateToProps, {logOut})(Sidebar)

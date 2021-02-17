@@ -47,7 +47,7 @@ function Chat(props) {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
                 <div className="chat_headerInfo">
                     <h3>{roomName}</h3>
-                    <p>last seen at ...</p>
+                    <p>{new Date(messages[messages.length-1]?.timestamp?.toDate()).toString().substring(16, 24)}</p>
                 </div>
                 <div className="chat_headerRight">
                     <IconButton>
@@ -60,13 +60,15 @@ function Chat(props) {
             </div>
             <div className="chat_body">
                 {messages.map(message => (
-                    <p key={message.id} className={`chat_message ${!message.recieved && "chat_reciever"}`}>
+                    <div key={message.timestamp.seconds} className={`chat_message ${message.name === user.displayName && "chat_reciever"}`}>
                         <p className="chat_name">{message.name}</p>
-                        {message.message}
-                        <span className="chat_time">
-                            {new Date(message.timestamp?.toDate()).toString().substring(16,24)}
-                        </span>
-                    </p>
+                        <p>
+                            {message.message}
+                            <span className="chat_time">
+                                {new Date(message.timestamp?.toDate()).toString().substring(16, 24)}
+                            </span>
+                        </p>
+                    </div>
                 ))}
             </div>
             <div className="chat_footer">
