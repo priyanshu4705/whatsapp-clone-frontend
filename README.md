@@ -1,6 +1,6 @@
 # Project hosted using firebase
 
-Project hosted [live here](https://whatsappclonefrontend.web.app)
+## Project hosted [live here](https://whatsappclonefrontend.web.app)
 
 Make a config.js file in src and store your firebaseConfig there
 
