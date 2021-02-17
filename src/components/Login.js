@@ -16,6 +16,7 @@ function Login(props) {
                 </div>
                 <Button onClick={props.signIn}>Sign In with google</Button>
             </div>
+            <p>Developed with 💜 by Priyanshu Srivastava.</p>
         </div>
     )
 }

@@ -14,12 +14,12 @@ a{
   place-items: center;
   height: 100vh;
   background-color: #dadbd3;
+  text-align: center;
 }
 
 .app_body{
   display: flex;
-  margin-top: -20px;
-  height: 95vh;
+  height: 90vh;
   width: 95vw;
   background-color: #ebebeb;
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.25);

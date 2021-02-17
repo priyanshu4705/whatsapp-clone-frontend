@@ -14,19 +14,22 @@ function App(props) {
   return (
     <div className="app">
       {(!user) ?
-       ( <Login />) :
-        <div className="app_body">
-          <Router>
-            <Sidebar />
-            <Switch>
-              <Route path="/rooms/:roomId">
-                <Chat />
-              </Route>
-              <Route path="/">
-                <Chat />
-              </Route>
-            </Switch>
-          </Router>
+        (<Login />) :
+        <div>
+          <div className="app_body">
+            <Router>
+              <Sidebar />
+              <Switch>
+                <Route path="/rooms/:roomId">
+                  <Chat />
+                </Route>
+                <Route path="/">
+                  <Chat />
+                </Route>
+              </Switch>
+            </Router>
+          </div>
+          <p>Developed with 💜 by Priyanshu Srivastava.</p>
         </div>}
     </div>
   );

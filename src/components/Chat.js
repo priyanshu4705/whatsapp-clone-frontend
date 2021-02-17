@@ -20,12 +20,17 @@ function Chat(props) {
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000));
         if (roomId) {
-            db.collection('rooms').doc(roomId)
+            const unsub1 = db.collection('rooms').doc(roomId)
                 .onSnapshot((snap) => setRoomName(snap.data().name));
 
-            db.collection('rooms').doc(roomId)
+            const unsub2 = db.collection('rooms').doc(roomId)
                 .collection('messages').orderBy('timestamp', 'asc')
                 .onSnapshot((snap) => (setMessages(snap.docs.map(doc => doc.data()))));
+            
+            return () => {
+                unsub1();
+                unsub2();
+            }
         }
     }, [roomId]);
 
@@ -47,7 +52,7 @@ function Chat(props) {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
                 <div className="chat_headerInfo">
                     <h3>{roomName}</h3>
-                    <p>{new Date(messages[messages.length-1]?.timestamp?.toDate()).toString().substring(16, 24)}</p>
+                    <p>{new Date(messages[messages.length - 1]?.timestamp?.toDate()).toString().substring(16, 24)}</p>
                 </div>
                 <div className="chat_headerRight">
                     <IconButton>
@@ -60,7 +65,7 @@ function Chat(props) {
             </div>
             <div className="chat_body">
                 {messages.map(message => (
-                    <div key={message.timestamp.seconds} className={`chat_message ${message.name === user.displayName && "chat_reciever"}`}>
+                    <div key={new Date(message.timestamp?.toDate()).toString().substring(16, 24)} className={`chat_message ${message.name === user.displayName && "chat_reciever"}`}>
                         <p className="chat_name">{message.name}</p>
                         <p>
                             {message.message}
