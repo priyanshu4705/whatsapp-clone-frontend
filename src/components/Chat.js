@@ -36,12 +36,13 @@ function Chat(props) {
 
     const sendMessage = (e) => {
         e.preventDefault();
-        db.collection('rooms').doc(roomId)
-            .collection('messages').add({
-                message: input,
-                recieved: false,
-                name: user.displayName,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        if(input!=='')
+            db.collection('rooms').doc(roomId)
+                .collection('messages').add({
+                    message: input,
+                    recieved: false,
+                    name: user.displayName,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
         setInput('');
     }
